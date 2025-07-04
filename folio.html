@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Portfolio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header>
+    <h1>Pathma Kowsik Pandiyan A</h1>
+
+    <div class="profile-frame" onclick="openModal()">
+      <img src="kowsik3.png" alt="Profile" class="profile-img" />
+    </div>
+
+    <nav>
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
+      <a href="#certs">Certifications</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <div id="profileModal" class="modal" onclick="closeModal()">
+    <span class="close">&times;</span>
+    <img class="modal-content" id="modalImage" src="kowsik3.png" alt="Full Profile" />
+  </div>
+
+  <section id="about" class="section">
+    <h2>About Me</h2>
+    <div class="about-content">
+      <p>🎓 I'm a B.E. CSE (AI/ML) student passionate about intelligent systems, automation, and solving real-world problems using code.</p>
+      <ul>
+        <li><strong>Name:</strong> Pathma Kowsik Pandiyan A</li>
+        <li><strong>Email:</strong> pathmakowsikpandiyan7@gmail.com</li>
+        <li><strong>Phone:</strong> +91 82481 45894</li>
+        <li><strong>Native:</strong> Vilathikulam,Thoothukudi,Tamilnadu</li>
+        <li><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/pathma-kowsik-pandiyan-a-024233357?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank">View Profile</a></li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="skills" class="section">
+    <h2>Technical Skills</h2>
+    <div class="skills-grid">
+      <span>Python</span>
+      <span>Java</span>
+      <span>C/C++</span>
+      <span>HTML/CSS/JS</span>
+      <span>SQL / DBMS</span>
+    </div>
+  </section>
+
+  <section id="projects" class="section">
+    <h2>Projects</h2>
+    <div class="project-card">
+      <h3>Gym Management System</h3>
+      <p>Java-based system to manage gym users, trainers, and machine logs.</p>
+      <a href="https://github.com/Kowsikpandiyan/java-project" target="_blank">🔗 GitHub</a>
+      <h3>Security Alarm</h3>
+      <p>A door enter alarm is a security device that triggers an alert when a door is opened or accessed.</p>
+      <a href="model.png" target="_blank">🖼️ Photo</a>
+    </div>
+  </section>
+
+  <section id="certs" class="section">
+    <h2>Certifications</h2>
+    <div class="certs-grid">
+      <div class="cert-card">
+        <h4>NPTEL - Introduction to Internet of Things</h4>
+        <p>Elite | 2024</p>
+      </div>
+      <div class="cert-card">
+        <h4>NPTEL - Cloud Computing</h4>
+        <p>Elite | 2024</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="section">
+    <h2>Contact Me</h2>
+    <p><strong>Email:</strong> pathmakowsikpandiyan7@gmail.com</p>
+    <p><strong>Phone:</strong> +91 82481 45894</p>
+    <p><strong>GitHub:</strong> <a href="https://github.com/Kowsikpandiyan" target="_blank">Kowsikpandiyan</a></p>
+  </section>
+
+  <footer>
+    <p>© 2025 Pathma Kowsik Pandiyan A. All rights reserved.</p>
+  </footer>
+
+  <script>
+    function openModal() {
+      document.getElementById("profileModal").style.display = "block";
+    }
+    function closeModal() {
+      document.getElementById("profileModal").style.display = "none";
+    }
+  </script>
+
+</body>
+</html>

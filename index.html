@@ -1,112 +1,305 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Pathma Kowsik Pandiyan A - Portfolio</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pathma Kowsik Pandiyan | Portfolio</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
-  <meta name="description" content="Pathma Kowsik Pandiyan A Portfolio - AI/ML Student, Java Developer, and Project Enthusiast.">
-  <meta name="keywords" content="Pathma Kowsik Pandiyan, Portfolio, AI Student, Java Developer, Engineering Projects, GitHub, Resume">
-  <meta name="author" content="Pathma Kowsik Pandiyan A">
+    <style>
+        :root {
+            --primary: #0b3d91;
+            --secondary: #2563eb;
+            --dark: #0f172a;
+            --light-bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #334155;
+            --text-light: #64748b;
+            --fire-color: #ff4500;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
 
-  <link rel="stylesheet" href="style.css" />
+        /* HIDE DEFAULT CURSOR */
+        * { margin: 0; padding: 0; box-sizing: border-box; cursor: none !important; }
+        
+        #fire-canvas {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--light-bg);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        /* --- Header --- */
+        header {
+            background: var(--dark);
+            color: white;
+            padding: 60px 20px 100px;
+            text-align: center;
+            clip-path: polygon(0 0, 100% 0, 100% 90%, 0% 100%);
+        }
+
+        .profile-frame {
+            width: 160px; height: 160px;
+            border-radius: 50%;
+            border: 4px solid var(--secondary);
+            margin: 0 auto 20px;
+            overflow: hidden;
+            transition: var(--transition);
+            box-shadow: 0 0 20px rgba(37, 99, 235, 0.3);
+            background: black;
+        }
+
+        .profile-img { 
+            width: 100%; height: 100%; 
+            object-fit: contain;
+        }
+
+        header h1 { font-size: 2.5rem; margin-bottom: 10px; font-weight: 700; letter-spacing: -1px; }
+
+        nav { margin-top: 25px; }
+        nav a { color: #cbd5e1; text-decoration: none; margin: 0 15px; font-weight: 500; transition: var(--transition); }
+        nav a:hover { color: var(--fire-color); }
+
+        /* --- Sections --- */
+        .section {
+            max-width: 1100px; margin: -40px auto 80px; padding: 40px;
+            background: var(--card-bg); border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05); position: relative; z-index: 10;
+        }
+
+        h2 { color: var(--primary); font-size: 1.8rem; margin-bottom: 30px; display: flex; align-items: center; gap: 10px; }
+        h2::after { content: ""; height: 3px; flex-grow: 1; background: linear-gradient(to right, #e2e8f0, transparent); }
+
+        .skills-grid { display: flex; flex-wrap: wrap; gap: 12px; }
+        .skills-grid span { background: #eff6ff; color: var(--secondary); padding: 8px 20px; border-radius: 50px; font-weight: 600; border: 1px solid #dbeafe; transition: var(--transition); }
+        .skills-grid span:hover { background: var(--fire-color); color: white; border-color: transparent; }
+
+        .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; }
+        .card { background: #ffffff; padding: 30px; border-radius: 15px; border: 1px solid #f1f5f9; transition: var(--transition); display: flex; flex-direction: column; justify-content: space-between; }
+        .card:hover { transform: translateY(-8px); border-color: var(--fire-color); }
+
+        #scrollTopBtn {
+            display: none; position: fixed; bottom: 30px; right: 30px; z-index: 99;
+            background-color: var(--fire-color); color: white; border: none;
+            width: 50px; height: 50px; border-radius: 50%; justify-content: center; align-items: center; box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        /* --- CHATBOT (MESSAGE BOX STYLE) --- */
+        #chat-widget { position: fixed; bottom: 30px; left: 30px; z-index: 1000; }
+        #chat-bubble {
+            width: 60px; height: 60px; background: var(--primary); border-radius: 50%;
+            display: flex; justify-content: center; align-items: center; color: white;
+            font-size: 24px; box-shadow: 0 10px 20px rgba(0,0,0,0.2); transition: var(--transition);
+        }
+        #chat-bubble:hover { transform: scale(1.1); background: var(--fire-color); }
+
+        #chat-window {
+            display: none; position: absolute; bottom: 80px; left: 0;
+            width: 320px; height: 450px; background: #f8fafc; border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3); flex-direction: column; overflow: hidden; border: 1px solid #e2e8f0;
+        }
+        #chat-header { background: var(--primary); color: white; padding: 15px; font-weight: 600; display: flex; align-items: center; gap: 10px; }
+        #chat-messages { flex-grow: 1; padding: 15px; overflow-y: auto; font-size: 0.85rem; display: flex; flex-direction: column; gap: 10px; background: #ffffff; }
+        .msg { padding: 10px 14px; border-radius: 18px; max-width: 85%; line-height: 1.4; }
+        .bot { background: #f1f5f9; align-self: flex-start; border-bottom-left-radius: 2px; color: #1e293b; }
+        .user { background: var(--secondary); color: white; align-self: flex-end; border-bottom-right-radius: 2px; }
+        
+        #chat-input-area { padding: 12px; background: #f8fafc; display: flex; align-items: center; gap: 8px; border-top: 1px solid #e2e8f0; }
+        #chat-input { flex-grow: 1; border: 1px solid #cbd5e1; background: white; padding: 10px 15px; border-radius: 25px; outline: none; font-size: 0.9rem; cursor: text !important; }
+        #chat-send { background: var(--primary); color: white; border: none; width: 35px; height: 35px; border-radius: 50%; display: flex; justify-content: center; align-items: center; transition: 0.3s; }
+
+        /* --- PROFESSIONAL LINKS DESIGN --- */
+        .profile-links-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .social-card {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 20px;
+            border-radius: 12px;
+            text-decoration: none;
+            color: white;
+            font-weight: 600;
+            transition: var(--transition);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .social-card.github { background: #24292e; }
+        .social-card.linkedin { background: #0077b5; }
+        .social-card:hover {
+            transform: translateY(-5px);
+            filter: brightness(1.2);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+
+        footer { background: var(--dark); color: #94a3b8; text-align: center; padding: 50px 20px; }
+        .modal { display: none; position: fixed; z-index: 10000; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); }
+        .modal-content { margin: auto; display: block; max-width: 500px; width: 80%; border-radius: 15px; border: 5px solid white; position: relative; top: 50%; transform: translateY(-50%); }
+
+        @media (max-width: 768px) {
+            header h1 { font-size: 2rem; }
+            .section { margin: -30px 15px 40px; padding: 25px; }
+            #fire-canvas, #chat-widget { display: none; }
+            * { cursor: auto !important; }
+        }
+    </style>
 </head>
-
 <body>
-  <header>
-    <h1>Pathma Kowsik Pandiyan A</h1>
+
+<canvas id="fire-canvas"></canvas>
+<button onclick="topFunction()" id="scrollTopBtn"><i class="fas fa-arrow-up"></i></button>
+
+<div id="chat-widget">
+    <div id="chat-window">
+        <div id="chat-header"><i class="fas fa-robot"></i> Kowsik's AI Assistant</div>
+        <div id="chat-messages">
+            <div class="msg bot">Hi! I know everything about Pathma Kowsik. Ask me about his Skills, Projects, or College!</div>
+        </div>
+        <div id="chat-input-area">
+            <input type="text" id="chat-input" placeholder="Ask something...">
+            <button id="chat-send"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
+    <div id="chat-bubble" onclick="toggleChat()"><i class="fas fa-comment-dots"></i></div>
+</div>
+
+<header>
     <div class="profile-frame" onclick="openModal()">
-      <img src="kowsik3.png" alt="Profile Image" class="profile-img" />
+        <img src="kowsik3.png" alt="Pathma Kowsik Pandiyan" class="profile-img">
     </div>
+    <h1>Pathma Kowsik Pandiyan A</h1>
+    <p style="color: #94a3b8;">CSE (AI & ML) Student | Full Stack Developer</p>
     <nav>
-      <a href="#about">About</a>
-      <a href="#skills">Skills</a>
-      <a href="#projects">Projects</a>
-      <a href="#certs">Certifications</a>
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#projects">Projects</a>
+        <a href="#certs">Certifications</a>
+        <a href="#contact">Contact</a>
     </nav>
-  </header>
+</header>
 
-  <div id="profileModal" class="modal" onclick="closeModal()">
-    <span class="close">&times;</span>
-    <img class="modal-content" id="modalImage" src="kowsik3.png" alt="Full Profile Image" />
-  </div>
-
-  <section id="about" class="section">
-    <h2>About Me</h2>
-    <div class="about-content">
-      <p>🎓 I'm a B.E. CSE (AI/ML) student passionate about intelligent systems, automation, and solving real-world problems using code.</p>
-      <ul>
-        <li><strong>Name:</strong> Pathma Kowsik Pandiyan A</li>
-        <li><strong>Native:</strong> Vilathikulam, Thoothukudi, Tamil Nadu</li>
-        <li><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/pathma-kowsik-pandiyan-a-024233357" target="_blank">View Profile</a></li>
-      </ul>
+<section id="about" class="section" data-aos="fade-up">
+    <h2><i class="fas fa-user-circle"></i> About Me</h2>
+    <div style="font-size: 1.05rem; color: var(--text-main);">
+        <p style="margin-bottom: 1em;">🎓 I am a <strong>B.E. Computer Science Engineering (Artificial Intelligence & Machine Learning)</strong> student with a strong passion for software development and intelligent systems.</p>
+        <p style="margin-bottom: 1em;">💻 I have hands-on experience in <strong>Java application development</strong>, <strong>full-stack web applications</strong> (MERN), and database-driven systems.</p>
+        <p style="margin-bottom: 1em;">🤖 My academic focus includes <strong>AI, NLP, IoT, Industry 4.0, and Cloud Computing</strong>. I have completed multiple <strong>NPTEL Elite certifications</strong> and online internships.</p>
     </div>
-  </section>
+    
+    <div style="margin-top: 30px; background: #f1f5f9; padding: 25px; border-radius: 15px; border-left: 5px solid var(--secondary);">
+        <p><strong><i class="fas fa-university"></i> College:</strong> National Engineering College</p>
+        <p><strong><i class="fas fa-graduation-cap"></i> Degree:</strong> B.E CSE (AI & ML)</p>
+        <p><strong><i class="fas fa-envelope"></i> Email:</strong> <a href="mailto:pathmakowsikpandiyan7@gmail.com" style="color: var(--secondary); text-decoration: none;">pathmakowsikpandiyan7@gmail.com</a></p>
+        
+        <div class="profile-links-container">
+            <a href="https://github.com/Kowsikpandiyan" target="_blank" class="social-card github">
+                <i class="fab fa-github"></i> GitHub Profile
+            </a>
+            <a href="https://www.linkedin.com/in/pathma-kowsik-pandiyan-a-024233357" target="_blank" class="social-card linkedin">
+                <i class="fab fa-linkedin"></i> LinkedIn Profile
+            </a>
+        </div>
+    </div>
+</section>
 
-  <section id="skills" class="section">
-    <h2>Technical Skills</h2>
+<section id="skills" class="section" data-aos="fade-up">
+    <h2><i class="fas fa-code"></i> Technical Skills</h2>
     <div class="skills-grid">
-      <span>Python</span>
-      <span>Java</span>
-      <span>C/C++</span>
-      <span>HTML/CSS/JS</span>
-      <span>SQL / DBMS</span>
+        <span>Java</span><span>Python</span><span>C</span><span>C++</span><span>HTML</span>
+        <span>CSS</span><span>JavaScript</span><span>React.js</span><span>Node.js</span>
+        <span>MongoDB</span><span>SQL / DBMS</span><span>NLP</span>
     </div>
-  </section>
+</section>
 
-  <section id="projects" class="section">
-    <h2>Projects</h2>
-    <div class="project-card">
-      <h3>Gym Management System</h3>
-      <p>Java-based system to manage gym users, trainers, and machine logs.</p>
-      <a href="page.png" target="_blank">🔗 Front page</a>
-
-      <h3>Security Alarm</h3>
-      <p>A door-entry alarm device that triggers an alert when a door is opened.</p>
-      <a href="model.png" target="_blank">🖼️ View Model</a>
+<section id="projects" class="section" data-aos="fade-up">
+    <h2><i class="fas fa-laptop-code"></i> Projects</h2>
+    <div class="grid-container">
+        <div class="card">
+            <h3>Prescripto – Hospital System</h3>
+            <p>Full-stack web application to manage doctors, patients, appointments, and an integrated online pharmacy system.</p>
+            <small><strong>Tech:</strong> React, Node, MongoDB, Razorpay</small>
+            <a href="https://hospital-jykb.vercel.app/hospitals" target="_blank" style="text-decoration:none; color:var(--secondary); font-weight:700; margin-top:10px;">Live Demo</a>
+        </div>
+        <div class="card">
+            <h3>Gym Management System</h3>
+            <p>Java-based system to manage members, trainers, subscriptions, and reports using JDBC and MySQL.</p>
+            <small><strong>Tech:</strong> Java, MySQL, JDBC</small>
+            <a href="page.png" target="_blank" style="text-decoration:none; color:var(--secondary); font-weight:700; margin-top:10px;">Front Page</a>
+        </div>
+        <div class="card">
+            <h3>Security Alarm System</h3>
+            <p>IoT-based door entry security alarm that triggers alerts during unauthorized access.</p>
+            <small><strong>Tech:</strong> IoT, Sensors, Microcontrollers</small>
+            <a href="model.png" target="_blank" style="text-decoration:none; color:var(--secondary); font-weight:700; margin-top:10px;">View Model</a>
+        </div>
     </div>
-  </section>
+</section>
 
-  <section id="certs" class="section">
-    <h2>Certifications</h2>
-    <div class="certs-grid">
-      <div class="cert-card">
-        <h4>NPTEL - Introduction to Internet of Things</h4>
-        <p>Elite | 2024</p>
-      </div>
-      <div class="cert-card">
-        <h4>NPTEL - Cloud Computing</h4>
-        <p>Elite | 2024</p>
-      </div>
+<section id="certs" class="section" data-aos="fade-up">
+    <h2><i class="fas fa-certificate"></i> Certifications & Internships</h2>
+    <div class="grid-container">
+        <div class="card"><h4>NPTEL – IoT</h4><p>Elite | 2024</p><a href="nptel1.png" target="_blank" style="color:var(--secondary); font-weight:700; text-decoration:none;">View Cert</a></div>
+        <div class="card"><h4>NPTEL – Cloud Computing</h4><p>Elite | 2024</p><a href="nptel2.png" target="_blank" style="color:var(--secondary); font-weight:700; text-decoration:none;">View Cert</a></div>
+        <div class="card"><h4>NPTEL – Industry 4.0</h4><p>Elite | 2024</p><a href="nptel3.png" target="_blank" style="color:var(--secondary); font-weight:700; text-decoration:none;">View Cert</a></div>
+        <div class="card"><h4>CodeSoft Internship</h4><p>AI & NLP | Python</p><a href="code.png" target="_blank" style="color:var(--secondary); font-weight:700; text-decoration:none;">Certificate</a></div>
+        <div class="card"><h4>TechNest Internship</h4><p>AI & NLP | Python</p><a href="tech.png" target="_blank" style="color:var(--secondary); font-weight:700; text-decoration:none;">Certificate</a></div>
     </div>
-  </section>
-  <footer>
-    <p>© 2025 Pathma Kowsik Pandiyan A. All rights reserved.</p>
-  </footer>
-  <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Person",
-  "name": "Pathma Kowsik Pandiyan A",
-  "url": "https://kowsikpandiyan.github.io/portfolio/",
-  "sameAs": [
-    "https://github.com/Kowsikpandiyan",
-    "https://www.linkedin.com/in/pathma-kowsik-pandiyan-a-024233357"
-  ],
-  "jobTitle": "Student | Developer",
-  "worksFor": {
-    "@type": "CollegeOrUniversity",
-    "name": "National Engineering College"
-  }
-}
+</section>
+
+<footer id="contact">
+    <p>Get in touch: <strong>pathmakowsikpandiyan7@gmail.com</strong></p>
+    <p style="font-size: 0.8rem; opacity: 0.6; margin-top: 20px;">© 2025 Pathma Kowsik Pandiyan A. All rights reserved.</p>
+</footer>
+
+<div id="profileModal" class="modal" onclick="closeModal()">
+    <img class="modal-content" src="kowsik3.png">
+</div>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+    AOS.init({ duration: 800, once: true });
+
+    // Cursor particles logic
+    const canvas = document.getElementById('fire-canvas'); const ctx = canvas.getContext('2d'); let particles = []; let mouse = { x: 0, y: 0 };
+    window.addEventListener('mousemove', (e) => { mouse.x = e.clientX; mouse.y = e.clientY; for (let i = 0; i < 5; i++) particles.push(new Particle()); });
+    class Particle { constructor() { this.x = mouse.x; this.y = mouse.y; this.size = Math.random()*6+2; this.speedX = (Math.random()-0.5)*1.5; this.speedY = Math.random()*-3-1; this.color = `hsl(${Math.random()*30+15}, 100%, 50%)`; this.opacity = 1; } update() { this.x += this.speedX; this.y += this.speedY; this.size *= 0.95; this.opacity -= 0.02; } draw() { ctx.globalAlpha = this.opacity; ctx.fillStyle = this.color; ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI*2); ctx.fill(); } }
+    function animate() { ctx.clearRect(0,0,canvas.width,canvas.height); canvas.width=window.innerWidth; canvas.height=window.innerHeight; for(let i=0;i<particles.length;i++){ particles[i].update(); particles[i].draw(); if(particles[i].opacity<=0){particles.splice(i,1);i--;}} requestAnimationFrame(animate); }
+    animate();
+
+    // Chatbot Logic
+    function toggleChat() { const win = document.getElementById('chat-window'); win.style.display = (win.style.display === 'flex') ? 'none' : 'flex'; }
+    document.getElementById('chat-send').onclick = () => {
+        const input = document.getElementById('chat-input'); const text = input.value.toLowerCase(); if(!text) return;
+        appendMsg(input.value, 'user'); input.value = '';
+        setTimeout(() => {
+            let r = "I'm not sure. Ask about Skills or Projects!";
+            if(text.includes('skill')) r = "Kowsik knows Java, Python, React, Node.js, and SQL.";
+            if(text.includes('project')) r = "Top projects: Prescripto (Hospital App), Gym System, and IoT Alarm.";
+            appendMsg(r, 'bot');
+        }, 600);
+    };
+    function appendMsg(t, type) { const d = document.createElement('div'); d.className = `msg ${type}`; d.innerText = t; document.getElementById('chat-messages').appendChild(d); document.getElementById('chat-messages').scrollTop = 9999; }
+
+    function openModal() { document.getElementById("profileModal").style.display = "block"; }
+    function closeModal() { document.getElementById("profileModal").style.display = "none"; }
+    let mybutton = document.getElementById("scrollTopBtn");
+    window.onscroll = function() { if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) mybutton.style.display = "flex"; else mybutton.style.display = "none"; };
+    function topFunction() { window.scrollTo({top: 0, behavior: 'smooth'}); }
 </script>
-  <script>
-    function openModal() {
-      document.getElementById("profileModal").style.display = "block";
-    }
-    function closeModal() {
-      document.getElementById("profileModal").style.display = "none";
-    }
-  </script>
 </body>
 </html>

@@ -50,20 +50,27 @@
             clip-path: polygon(0 0, 100% 0, 100% 90%, 0% 100%);
         }
 
+        /* FIXED PROFILE FRAME & IMAGE SIZE */
         .profile-frame {
-            width: 160px; height: 160px;
+            width: 180px; /* Slightly increased size */
+            height: 180px;
             border-radius: 50%;
             border: 4px solid var(--secondary);
             margin: 0 auto 20px;
             overflow: hidden;
             transition: var(--transition);
-            box-shadow: 0 0 20px rgba(37, 99, 235, 0.3);
-            background: black;
+            box-shadow: 0 0 20px rgba(37, 99, 235, 0.4);
+            background: #fff; /* Changed to white to look cleaner */
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .profile-img { 
-            width: 100%; height: 100%; 
-            object-fit: contain;
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; /* FIXED: Now fills the circle perfectly */
+            object-position: center; /* Ensures the face is centered */
         }
 
         header h1 { font-size: 2.5rem; margin-bottom: 10px; font-weight: 700; letter-spacing: -1px; }
@@ -96,7 +103,24 @@
             width: 50px; height: 50px; border-radius: 50%; justify-content: center; align-items: center; box-shadow: 0 4px 12px rgba(0,0,0,0.2);
         }
 
-        /* --- CHATBOT (MESSAGE BOX STYLE) --- */
+        /* --- CONTACT FORM STYLING --- */
+        .contact-form-container {
+            display: flex; flex-direction: column; gap: 15px;
+        }
+        .contact-form-container input, .contact-form-container textarea {
+            width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #ddd; background: #fdfdfd; outline: none; font-family: inherit; cursor: text !important;
+        }
+        .contact-form-container input:focus, .contact-form-container textarea:focus {
+            border-color: var(--secondary);
+        }
+        .submit-btn {
+            background: var(--primary); color: white; padding: 12px 25px; border-radius: 10px; border: none; font-weight: 700; transition: 0.3s; width: fit-content;
+        }
+        .submit-btn:hover {
+            background: var(--fire-color); transform: translateY(-2px);
+        }
+
+        /* --- CHATBOT --- */
         #chat-widget { position: fixed; bottom: 30px; left: 30px; z-index: 1000; }
         #chat-bubble {
             width: 60px; height: 60px; background: var(--primary); border-radius: 50%;
@@ -149,7 +173,10 @@
 
         footer { background: var(--dark); color: #94a3b8; text-align: center; padding: 50px 20px; }
         .modal { display: none; position: fixed; z-index: 10000; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); }
-        .modal-content { margin: auto; display: block; max-width: 500px; width: 80%; border-radius: 15px; border: 5px solid white; position: relative; top: 50%; transform: translateY(-50%); }
+        .modal-content { 
+            margin: auto; display: block; max-width: 500px; width: 80%; border-radius: 15px; border: 5px solid white; position: relative; top: 50%; transform: translateY(-50%);
+            object-fit: cover; /* Also added here for consistency */
+        }
 
         @media (max-width: 768px) {
             header h1 { font-size: 2rem; }
@@ -261,7 +288,20 @@
     </div>
 </section>
 
-<footer id="contact">
+<section id="contact" class="section" data-aos="fade-up">
+    <h2><i class="fas fa-envelope-open-text"></i> Direct Inquiry</h2>
+    <form action="https://formspree.io/f/xgoeenpy" method="POST" class="contact-form-container">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+            <input type="text" name="name" placeholder="Your Full Name" required>
+            <input type="email" name="email" placeholder="Your Email Address" required>
+        </div>
+        <input type="text" name="subject" placeholder="Subject" required>
+        <textarea name="message" rows="5" placeholder="Write your message here..." required></textarea>
+        <button type="submit" class="submit-btn">Send Message <i class="fas fa-paper-plane"></i></button>
+    </form>
+</section>
+
+<footer id="contact-footer">
     <p>Get in touch: <strong>pathmakowsikpandiyan7@gmail.com</strong></p>
     <p style="font-size: 0.8rem; opacity: 0.6; margin-top: 20px;">© 2025 Pathma Kowsik Pandiyan A. All rights reserved.</p>
 </footer>
@@ -281,7 +321,6 @@
     function animate() { ctx.clearRect(0,0,canvas.width,canvas.height); canvas.width=window.innerWidth; canvas.height=window.innerHeight; for(let i=0;i<particles.length;i++){ particles[i].update(); particles[i].draw(); if(particles[i].opacity<=0){particles.splice(i,1);i--;}} requestAnimationFrame(animate); }
     animate();
 
-    // Chatbot Logic
     function toggleChat() { const win = document.getElementById('chat-window'); win.style.display = (win.style.display === 'flex') ? 'none' : 'flex'; }
     document.getElementById('chat-send').onclick = () => {
         const input = document.getElementById('chat-input'); const text = input.value.toLowerCase(); if(!text) return;
@@ -303,7 +342,3 @@
 </script>
 </body>
 </html>
-
-
-
-
